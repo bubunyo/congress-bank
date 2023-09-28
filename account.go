@@ -1,24 +1,33 @@
 package congressbank
 
-import "github.com/bubunyo/congress-bank/store"
+import (
+	"github.com/bubunyo/congress-bank/store"
+)
 
 var (
 	accountBase = store.NewStore[Account]()
 )
 
-type Currency struct {
-}
-
-type Transaction struct {
-}
-
-type Ledger struct {
-}
-
 type Account struct {
-	Num          string
-	Curr         Currency
-	Transactions *store.Store[Transaction]
-	Ledger       *store.Store[Ledger]
-	Type         string // savings/current
+	Num           string
+	Curr          CurrencyCode
+	MoneyOrderIds *store.Store[struct{}]
+	Type          string // savings/current
+}
+
+func (a *Account) Balance() int64 {
+	var acc int64
+	moneyOrders.Range(func(mid string) {
+		m, _ := moneyOrders.Get(mid)
+		m.LedgerIds.Range(func(id string) {
+			if li, ok := ledger.Get(id); ok {
+				if li.TransactionType == Credit {
+					acc += int64(li.Amount)
+				} else {
+					acc -= int64(li.Amount)
+				}
+			}
+		})
+	})
+	return acc
 }

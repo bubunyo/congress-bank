@@ -39,11 +39,10 @@ func CreateNewUser(name string) (*User, bool) {
 	return nil, false
 }
 
-func (u *User) NewAccount(curr Currency) (*Account, bool) {
+func (u *User) NewAccount(curr CurrencyCode) (*Account, bool) {
 	a := &Account{
-		Curr:         curr,
-		Transactions: store.NewStore[Transaction](),
-		Ledger:       store.NewStore[Ledger](),
+		Curr:          curr,
+		MoneyOrderIds: store.NewStore[struct{}](),
 	}
 
 	for i := 0; i < maxEffort; i++ {

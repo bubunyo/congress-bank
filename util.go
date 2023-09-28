@@ -1,6 +1,9 @@
 package congressbank
 
-import "math/rand"
+import (
+	"fmt"
+	"math/rand"
+)
 
 var (
 	min = 1_000_000_000
@@ -10,4 +13,11 @@ var (
 func genId() int {
 	r1 := rand.New(src)
 	return r1.Intn(max-min) + min
+}
+
+func genIdWithPrefix(p string) string {
+	r1 := rand.New(src)
+	id := r1.Intn(max-min) + min
+	return fmt.Sprintf("%s%d", p, id)
+
 }

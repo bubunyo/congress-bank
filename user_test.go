@@ -14,32 +14,13 @@ func TestUserCreation(t *testing.T) {
 
 	fmt.Printf("user details name=%s, user_id=%s\n", user.Name, user.Id)
 
-	acc, ok := user.NewAccount(Currency{})
+	acc1, ok := user.NewAccount(GhanaPesewas)
 	require.True(t, ok)
-	fmt.Printf("account details id=%s\n", acc.Num)
+	fmt.Printf("account details id=%s\n", acc1.Num)
 
-	acc, ok = user.NewAccount(Currency{})
+	acc2, ok := user.NewAccount(GhanaPesewas)
 	require.True(t, ok)
-	fmt.Printf("account details 2 id=%s\n", acc.Num)
+	fmt.Printf("account details 2 id=%s\n", acc2.Num)
 
 	fmt.Printf("%v", user)
-
-	// for k, _ := range user.Accounts {
-	// 	acc := accountBase.Get(k)
-	// }
-
-	/*
-			  acc = 12345
-				user.Acc.Get(12345)
-				// list
-				for k,_ =  us.acc{
-				if k == 12345
-				return true
-				_, ok:= user.Acc[1234]
-				return ok
-				}
-		HahSet<Object>
-
-
-	*/
 }
