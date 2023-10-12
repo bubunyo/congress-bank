@@ -1,25 +1,33 @@
 package congressbank
 
-/*
-bubu Accout(500 ghs)
-Kwame Accout(200 ghs)
+import (
+	"fmt"
+	"testing"
 
-bubu sends(kwame, 100)
-Debit bubu
-Credit Kwame
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
 
-Debit Bubu,
-Credit Bubu
+func TestMoneyOrders(t *testing.T) {
+	bubu, ok := CreateNewUser("Bubu")
+	assert.True(t, ok)
 
-retrun reduce(ledgeIterms, 0,  func(acc) {
-if credit? acc+=ledgerItem.Amount
-if credit? acc-=ledgerItem.Amount
-return acc
-})
+	kwame, ok := CreateNewUser("kwame")
+	assert.True(t, ok)
 
+	bubuAcc, ok := bubu.NewAccount(GhanaPesewas)
+	require.True(t, ok)
+	assert.Equal(t, int64(0), bubuAcc.Balance())
 
-Kwame - > 300
+	kwameAcc, ok := kwame.NewAccount(GhanaPesewas)
+	require.True(t, ok)
+	assert.Equal(t, int64(0), kwameAcc.Balance())
 
-/debit/credit
+	err := CreateMoneyOrder(*house[bubuAcc.Curr], *bubuAcc, 10_000, GhanaPesewas, "Shege reasons")
+	assert.NoError(t, err)
 
-*/
+	bal := bubuAcc.Balance()
+	balStr, err := bubuAcc.Curr.ConvertTo(GhanaCedis, float64(bal))
+	require.NoError(t, err)
+	fmt.Println("bubu's balance=", balStr)
+}
