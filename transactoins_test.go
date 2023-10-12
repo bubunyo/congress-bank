@@ -11,11 +11,11 @@ Credit Kwame
 Debit Bubu,
 Credit Bubu
 
-retrun reduce(ledger iterms, 0) func(acc) {
+retrun reduce(ledgeIterms, 0,  func(acc) {
 if credit? acc+=ledgerItem.Amount
 if credit? acc-=ledgerItem.Amount
 return acc
-}
+})
 
 
 Kwame - > 300
